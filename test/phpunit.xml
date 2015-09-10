@@ -1,0 +1,40 @@
+<phpunit>
+
+    <testsuites>
+
+        <testsuite name="AssetsInjection/Definition">
+            <file>DefinitionTest.php</file>
+            <file>FrozenDefinitionTest.php</file>
+        </testsuite>
+
+        <testsuite name="AssetsInjection/Compiler">
+            <file>Compiler/TestCompilerPassCollection.php</file>
+            <file>Compiler/TestValidateLibraryDefinitionsPass.php</file>
+            <file>Compiler/TestResolveResourceReferencesPass.php</file>
+            <file>Compiler/TestProcessGlobResourcesPass.php</file>
+            <file>Compiler/TestIncludeRemoteResourcesDynamicallyPass.php</file>
+            <file>Compiler/TestCheckCircularReferencesPass.php</file>
+            <file>Compiler/TestValidateResourcesPass.php</file>
+            <file>Compiler/TestCheckContainerResourcesRenderability.php</file>
+            <file>Compiler/TestProcessAssetsFiltersPass.php</file>
+        </testsuite>
+
+        <testsuite name="AssetsInjection/Utils">
+            <file>Utils/AssetTypeTest.php</file>
+        </testsuite>
+
+        <testsuite name="AssetsInjection/Dumper">
+            <file>Dumper/TestPhpDumper.php</file>
+        </testsuite>
+
+        <testsuite name="AssetsInjection/Integration">
+            <file>Integration/TestDynamicAssetsInjection.php</file>
+        </testsuite>
+
+        <testsuite name="AssetsInjection/Twig">
+            <file>Twig/InjectTagTest.php</file>
+        </testsuite>
+
+    </testsuites>
+
+</phpunit>

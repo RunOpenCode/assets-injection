@@ -28,7 +28,7 @@ class InjectTagTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->environment = new \Twig_Environment($this->loader = new \Twig_Loader_Array(array()), array(
-            'cache' => realpath(__DIR__ . '/../Data/tmp')
+            //'cache' => realpath(__DIR__ . '/../Data/tmp')
         ));
 
         $this->environment->clearCacheFiles();
