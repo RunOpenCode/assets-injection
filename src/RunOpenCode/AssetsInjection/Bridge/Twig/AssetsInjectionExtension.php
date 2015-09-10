@@ -2,7 +2,11 @@
 
 namespace RunOpenCode\AssetsInjection\Bridge\Twig;
 
+use RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor\BufferizeAssetsRendering;
+use RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor\BufferizeBodyNode;
 use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Inject\TokenParser as InjectTokenParser;
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Css\TokenParser as CssTokenParser;
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Js\TokenParser as JsTokenParser;
 use RunOpenCode\AssetsInjection\Contract\ManagerInterface;
 use RunOpenCode\AssetsInjection\Exception\InvalidArgumentException;
 use RunOpenCode\AssetsInjection\Utils\AssetType;
@@ -15,9 +19,21 @@ final class AssetsInjectionExtension extends Twig_Extension
 
     private $manager;
 
-    public function __construct(ManagerInterface $manager)
+    private $options;
+
+    public function __construct(ManagerInterface $manager, array $options = [])
     {
         $this->manager = $manager;
+        $this->options = array_merge(
+            [
+                'bufferize' => true
+            ],
+            $options
+        );
+
+        if ($this->options['bufferize'] === true) {
+            $this->options['bufferize'] = [];
+        }
     }
 
     public function getManager()
@@ -46,10 +62,10 @@ final class AssetsInjectionExtension extends Twig_Extension
             }),
             new Twig_SimpleFunction('js', function($position = null, array $options = []) use ($manager) {
                 return $manager->render(AssetType::JAVASCRIPT, $position, $options);
-            }, ['is_safe' => true]),
+            }),
             new Twig_SimpleFunction('css', function($position = null, array $options = []) use ($manager) {
                 return $manager->render(AssetType::STYLESHEET, $position, $options);
-            }, ['is_safe' => true])
+            })
         ];
     }
 
@@ -59,7 +75,9 @@ final class AssetsInjectionExtension extends Twig_Extension
     public function getTokenParsers()
     {
         return [
-            new InjectTokenParser()
+            new InjectTokenParser(),
+            new CssTokenParser(),
+            new JsTokenParser()
         ];
     }
 
@@ -68,9 +86,17 @@ final class AssetsInjectionExtension extends Twig_Extension
      */
     public function getNodeVisitors()
     {
-        return [
-            new NodeVisitor()
-        ];
+        if ($this->options['bufferize'] !== false && !is_null($this->options['bufferize'])) {
+
+            return [
+                new BufferizeBodyNode($this->options['bufferize']),
+                new BufferizeAssetsRendering($this->options['bufferize'])
+            ];
+
+        } else {
+            return [];
+        }
+
     }
 
     /**

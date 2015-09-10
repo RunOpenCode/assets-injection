@@ -31,6 +31,8 @@ class InjectTagTest extends \PHPUnit_Framework_TestCase
             'cache' => realpath(__DIR__ . '/../Data/tmp')
         ));
 
+        $this->environment->clearCacheFiles();
+
         $container = new Container(new LibraryCollection([
             new LibraryDefinition('jquery', array(
                 new FileResource(realpath(__DIR__ . '/../Data/web/js/jquery.js')),
@@ -46,13 +48,44 @@ class InjectTagTest extends \PHPUnit_Framework_TestCase
             'http_root' => 'http://www.mysite.com/'
         ));
 
-        $this->environment->addExtension(new AssetsInjectionExtension($manager));
+        $this->environment->addExtension(new AssetsInjectionExtension($manager, ['bufferize' => true]));
     }
 
     public function testInjectTag()
     {
-        $this->loader->setTemplate('test', '{% set marko = "asda" %}{% inject janko, "pero", "djuro" %}');
-        $this->environment->render('test', array('janko' => 'jquery'));
+
+        $this->loader->setTemplate('test',
+            '
+                {% block pero %}
+
+
+                {% endblock %}
+
+                {% css %}
+
+
+
+                {% block djuro %}
+
+                    {% block janko %}
+
+                        {% block cmarko %}
+
+                            {% js %}
+
+                        {% endblock %}
+
+                    {% endblock %}
+
+
+                {% endblock %}
+
+                {% inject "jquery" %}
+
+            '
+        );
+        //$this->loader->setTemplate('test', '{% inject "jquery" %}{% css using {"nesto": "pero", "nesto_drugo": "drugo"} %}{% css %} {% css pero %} {% css nesto using drugo %}');
+        $this->environment->render('test');
     }
 
 

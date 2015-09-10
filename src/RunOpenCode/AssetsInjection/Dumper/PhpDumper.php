@@ -16,6 +16,9 @@ use RunOpenCode\AssetsInjection\Template\PhpTemplate;
 
 final class PhpDumper implements DumperInterface
 {
+    const DYNAMIC_CONTAINER = 'dynamic_container';
+    const STATIC_CONTAINER = 'static_container';
+
     private $renderer;
 
     public function __construct()
@@ -30,12 +33,12 @@ final class PhpDumper implements DumperInterface
             'classname' => null,
             'extends' => '\\RunOpenCode\\AssetsInjection\\Container',
             'libraries' => $container->getLibraries(),
-            'type' => DumperInterface::DYNAMIC_CONTAINER
+            'type' => self::DYNAMIC_CONTAINER
         ], $options);
 
         if (!in_array($variables['type'], array(
-            DumperInterface::DYNAMIC_CONTAINER,
-            DumperInterface::STATIC_CONTAINER
+            self::DYNAMIC_CONTAINER,
+            self::STATIC_CONTAINER
         ))) {
             throw new RuntimeException(sprintf('Unknown container type "%s" requested for dumping.', $variables['template']));
         }

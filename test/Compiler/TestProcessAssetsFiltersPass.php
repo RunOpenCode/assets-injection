@@ -10,11 +10,11 @@
 namespace RunOpenCode\AssetsInjection\Tests\Compiler;
 
 use Assetic\FilterManager;
-use RunOpenCode\AssetsInjection\Definition\LibraryCollection;
-use RunOpenCode\AssetsInjection\Definition\Resource;
 use RunOpenCode\AssetsInjection\Compiler\ProcessAssetsFiltersPass;
 use RunOpenCode\AssetsInjection\Container;
-use RunOpenCode\AssetsInjection\Definition\LibraryDefinition;
+use RunOpenCode\AssetsInjection\Library\LibraryCollection;
+use RunOpenCode\AssetsInjection\Library\LibraryDefinition;
+use RunOpenCode\AssetsInjection\Resource\FileResource;
 use RunOpenCode\AssetsInjection\Tests\Mockup\DummyFilter;
 use RunOpenCode\AssetsInjection\Utils\AssetType;
 use RunOpenCode\AssetsInjection\Value\CompilerPassResult;
@@ -47,7 +47,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
 
         $container = new Container(new LibraryCollection(array(
             new LibraryDefinition('mylib', array(
-                new Resource($sourceFile)
+                new FileResource($sourceFile)
             ))
         )));
 
@@ -57,9 +57,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
 
         $files = glob(rtrim($this->outputDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '/*');
 
-        $this->assertSame(1, count($files), 'Only one file should be dumped into output dir.');
-        $this->assertSame(file_get_contents($sourceFile), file_get_contents($files[0]), 'Source and dumped files should be same.');
-        $this->assertSame(AssetType::guessExtension($sourceFile), AssetType::guessExtension($files[0]), 'File should have proper extension.');
+        $this->assertSame(0, count($files), 'File should not be processed.');
     }
 
     public function testProcessAssetWithFiltering()
@@ -69,7 +67,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
 
         $container = new Container(new LibraryCollection(array(
             new LibraryDefinition('mylib', array(
-                new Resource($sourceFile, array('filters' => array('mockup')))
+                new FileResource($sourceFile, array('filters' => array('mockup')))
             ))
         )));
 
@@ -86,7 +84,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(AssetType::guessExtension($sourceFile), AssetType::guessExtension($files[0]), 'File has proper extension.');
 
-        $this->assertSame(0, count($result->getContainer()->getLibraries()->getDefinition('mylib')->getResources()[0]->getOptions()['filters']));
+        $this->assertFalse(array_key_exists('filters', $result->getContainer()->getLibraries()->getDefinition('mylib')->getResources()[0]->getOptions()));
     }
 
     public function testProcessAssetWithIncludedOptionalFilter()
@@ -96,7 +94,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
 
         $container = new Container(new LibraryCollection(array(
             new LibraryDefinition('mylib', array(
-                new Resource($sourceFile, array('filters' => array('?mockup')))
+                new FileResource($sourceFile, array('filters' => array('?mockup')))
             ))
         )));
 
@@ -113,7 +111,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
         $this->assertSame('.prod.', substr($files[0], -8, 6), 'File name should contain ".prod.".');
         $this->assertSame(AssetType::guessExtension($sourceFile), AssetType::guessExtension($files[0]), 'File has proper extension.');
 
-        $this->assertSame(0, count($result->getContainer()->getLibraries()->getDefinition('mylib')->getResources()[0]->getOptions()['filters']));
+        $this->assertFalse(array_key_exists('filters', $result->getContainer()->getLibraries()->getDefinition('mylib')->getResources()[0]->getOptions()));
     }
 
     public function testProcessAssetWithExcludedOptionalFilter()
@@ -123,7 +121,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
 
         $container = new Container(new LibraryCollection(array(
             new LibraryDefinition('mylib', array(
-                new Resource($sourceFile, array('filters' => array('?mockup')))
+                new FileResource($sourceFile, array('filters' => array('?mockup')))
             ))
         )));
 
@@ -138,7 +136,7 @@ class TestProcessAssetsFiltersPass extends \PHPUnit_Framework_TestCase
         $this->assertSame('.dev.', substr($files[0], -7, 5), 'File name should contain ".dev.".');
         $this->assertSame(AssetType::guessExtension($sourceFile), AssetType::guessExtension($files[0]), 'File should have proper extension.');
 
-        $this->assertSame(1, count($result->getContainer()->getLibraries()->getDefinition('mylib')->getResources()[0]->getOptions()['filters']));
+        $this->assertFalse(array_key_exists('filters', $result->getContainer()->getLibraries()->getDefinition('mylib')->getResources()[0]->getOptions()));
     }
 
     private function emptyOutput()

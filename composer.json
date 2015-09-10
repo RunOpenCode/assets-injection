@@ -16,8 +16,12 @@
       "RunOpenCode\\AssetsInjection\\": "src/RunOpenCode/AssetsInjection/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "RunOpenCode\\AssetsInjection\\Tests\\": "test/"
+    }
+  },
   "require": {
-    "kriswallsmith/assetic": "^1.2",
-    "runopencode/library": "*"
+    "kriswallsmith/assetic": "^1.2"
   }
 }

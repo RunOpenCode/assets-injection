@@ -71,7 +71,7 @@ class TestDynamicAssetsInjection extends \PHPUnit_Framework_TestCase
         file_put_contents(
             $filename = sprintf('%s/%s',realpath(__DIR__ . '/../Data/tmp'), 'testDynamicContainerWithSequentialRenderer.php'),
             $this->dumper->dump($this->container, [
-                'type' => DumperInterface::DYNAMIC_CONTAINER,
+                'type' => PhpDumper::DYNAMIC_CONTAINER,
                 'classname' => 'testDynamicContainerWithSequentialRenderer'
             ])
         );

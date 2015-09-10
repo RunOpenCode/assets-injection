@@ -1,0 +1,77 @@
+<?php
+
+namespace RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor;
+
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\BufferizedBody;
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\Init;
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\Output;
+use Twig_Node_Module;
+use Twig_Environment;
+use Twig_Node;
+
+/**
+ * Class BufferizeBodyNode
+ *
+ * Wraps body of the twig template with output buffer,
+ * making possible to delay execution of portions of template logic.
+ *
+ * @package RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor
+ */
+final class BufferizeBodyNode extends BaseNodeVisitor
+{
+
+    private $shouldBufferizeBody = false;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doEnterNode(Twig_Node $node, Twig_Environment $env)
+    {
+        parent::doEnterNode($node, $env);
+
+        if ($this->shouldProcess()) {
+
+            if ($this->isAssetsInjectionNode($node)) {
+                $this->shouldBufferizeBody = true;
+            }
+
+        }
+
+        return $node;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doLeaveNode(Twig_Node $node, Twig_Environment $env)
+    {
+        if ($this->shouldProcess()) {
+
+            if ($node instanceof Twig_Node_Module) {
+
+                if ($this->shouldBufferizeBody) {
+                    $node->setNode('body', new BufferizedBody(array(
+                        new Init(),
+                        $node->getNode('body'),
+                        new Output()
+                    )));
+                }
+
+                $this->shouldBufferizeBody = false;
+            }
+
+        }
+
+        parent::doLeaveNode($node, $env);
+
+        return $node;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
+    {
+        return 9;
+    }
+}
