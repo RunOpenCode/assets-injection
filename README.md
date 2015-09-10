@@ -4,8 +4,8 @@ Assets injection library is missing assets management component that combines De
 one library that helps full stack developers/front end developers to include necessary javascripts and stylesheets
 into template without worrying about dependencies and order of inclusion.
 
-If projects such as Bower or Components or some other will help you to pull assets from Github to your project directory,
-this component will help you to include those assets into template.
+If projects such as Bower or Components (or some other similar project) will help you to pull assets from Github to your 
+project directory, this component will help you to include those assets into template.
 
 ## How? Learn by example...
 
@@ -71,6 +71,19 @@ might look like this in production enviroment:
         </body>
     </html>
 
+
+## Do you see the magic? 
+
+Can you see that `LINK` tag in `HEAD` is rendered properly, even thoug assets are injected AFTER rendering logic? We didn't
+use `str_replace`, nor some nasty hacks - we made Twig to buffer its output and delay execution of portions of templates
+in order to achieve this result.
+
+And this was not easy task, see: [Sonata base layout](https://github.com/sonata-project/SonataPageBundle/blob/master/Resources/views/base_layout.html.twig), 
+note `{{ sonata_block_include_stylesheets('screen', app.request.basePath) }}` at the bottom - stylesheets are not loaded 
+where they should be - in `HEAD` tag.
+
+We figure out how to overcome above mentioned issue, and this library was developed having in mind Sonata and Drupal dynamic-block-like
+content.
 
 ## In development 
 
