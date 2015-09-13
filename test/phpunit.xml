@@ -35,6 +35,10 @@
             <file>Twig/InjectTagTest.php</file>
         </testsuite>
 
+        <testsuite name="AssetsInjection/Factory">
+            <file>Factory/Loader/YamlLoaderTest.php</file>
+        </testsuite>
+
     </testsuites>
 
 </phpunit>

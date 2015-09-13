@@ -1,0 +1,14 @@
+jquery:
+  - { source: https://code.jquery.com/jquery-2.1.4.min.js }
+
+jquery-ui:
+  - { source: @jquery }
+  - { source: //code.jquery.com/ui/1.11.3/jquery-ui.min.js, options: { filters: ['packjs'] } }
+  - { source: //code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css, options: { filters: ['rewrite', 'min'] } }
+
+my-lib:
+  - { source: @jqury-ui }
+  - { source: '/../web/js/myjavascript.js' }
+
+glob-lib:
+  - { source: '/../web/js/*' }

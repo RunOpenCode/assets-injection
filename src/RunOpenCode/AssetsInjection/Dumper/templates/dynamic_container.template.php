@@ -66,7 +66,7 @@ class <?php echo ($classname) ? $classname : 'CompiledDynamicContainer'; ?> exte
     public function inject($name)
     {
         if (!isset($this->injected['libraries'][$name])) {
-            call_user_func(array($this, 'inject_' . str_replace(array('_', '-', '/'), '_', $name)));
+            call_user_func(array($this, 'inject_' . str_replace(array('-', '/'), '_', $name)));
         }
         return $this;
     }
@@ -124,15 +124,15 @@ class <?php echo ($classname) ? $classname : 'CompiledDynamicContainer'; ?> exte
 $libraryMap = [];
 foreach ($libraries as $library):
 
-if (!isset($libraryMap[str_replace(array('_', '-', '/'), '_', $library->getName())])) {
-    $libraryMap[str_replace(array('_', '-', '/'), '_', $library->getName())] = $library->getName();
+if (!isset($libraryMap[str_replace(array('-', '/'), '_', $library->getName())])) {
+    $libraryMap[str_replace(array('-', '/'), '_', $library->getName())] = $library->getName();
 } else {
-    throw new \RunOpenCode\AssetsInjection\Exception\RuntimeException(sprintf('Library name collision detected for library "%s" and "%s".', $libraryMap[str_replace(array('_', '-', '/'), '_', $library->getName())], $library->getName()));
+    throw new \RunOpenCode\AssetsInjection\Exception\RuntimeException(sprintf('Library name collision detected for library "%s" and "%s".', $libraryMap[str_replace(array('-', '/'), '_', $library->getName())], $library->getName()));
 }
 ?>   /**
     * Method which optimizes injection of resources of library '<?php echo $library->getName(); ?>'.
     */
-    private function inject_<?php echo str_replace(array('_', '-', '/'), '_', $library->getName()); ?>()
+    private function inject_<?php echo str_replace(array('-', '/'), '_', $library->getName()); ?>()
     {
         $this->injected['libraries']['<?php echo $library->getName(); ?>'] = true;
 
