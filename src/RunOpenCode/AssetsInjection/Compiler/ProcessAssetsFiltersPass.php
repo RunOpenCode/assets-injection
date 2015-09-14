@@ -15,7 +15,7 @@ use Assetic\Asset\HttpAsset;
 use Assetic\Asset\StringAsset;
 use Assetic\AssetWriter;
 use Assetic\FilterManager;
-use RunOpenCode\AssetsInjection\Contract\CompilerPassInterface;
+use RunOpenCode\AssetsInjection\Contract\Compiler\CompilerPassInterface;
 use RunOpenCode\AssetsInjection\Contract\ContainerInterface;
 use RunOpenCode\AssetsInjection\Contract\LibraryDefinitionInterface;
 use RunOpenCode\AssetsInjection\Contract\ResourceInterface;

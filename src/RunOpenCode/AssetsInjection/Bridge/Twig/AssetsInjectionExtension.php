@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the Asset Injection package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\AssetsInjection\Bridge\Twig;
 
 use RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor\BufferizeAssetsRendering;
@@ -13,14 +20,39 @@ use RunOpenCode\AssetsInjection\Utils\AssetType;
 use Twig_Extension;
 use Twig_SimpleFunction;
 
+/**
+ * Class AssetsInjectionExtension
+ *
+ * Assets injection Twig extension.
+ *
+ * @package RunOpenCode\AssetsInjection\Bridge\Twig
+ */
 final class AssetsInjectionExtension extends Twig_Extension
 {
     const NAME = 'assets_injection';
 
+    /**
+     * @var ManagerInterface
+     */
     private $manager;
 
+    /**
+     * @var array
+     */
     private $options;
 
+    /**
+     * A constructor.
+     *
+     * Supported options:
+     *
+     * * bufferize - weather node visitors should be executed ensuring that assets injection tags are rendered last. Default
+     * value is TRUE. For optimization purposes, array of template names can be provided as well, which will ensure that only
+     * those templates will be processed.
+     *
+     * @param ManagerInterface $manager Manager.
+     * @param array $options Array of options.
+     */
     public function __construct(ManagerInterface $manager, array $options = [])
     {
         $this->manager = $manager;
@@ -36,6 +68,11 @@ final class AssetsInjectionExtension extends Twig_Extension
         }
     }
 
+    /**
+     * Get manager.
+     *
+     * @return ManagerInterface
+     */
     public function getManager()
     {
         return $this->manager;

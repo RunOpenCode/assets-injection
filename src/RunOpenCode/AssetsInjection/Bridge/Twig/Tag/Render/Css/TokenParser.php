@@ -1,8 +1,15 @@
 <?php
-
+/*
+ * This file is part of the Asset Injection package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Css;
 
-use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\AbstractTokenParser;
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\AbstractRenderTokenParser;
 use Twig_Node;
 
 /**
@@ -17,7 +24,7 @@ use Twig_Node;
  *
  * @package RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Css
  */
-class TokenParser extends AbstractTokenParser
+final class TokenParser extends AbstractRenderTokenParser
 {
     /**
      * {@inheritdoc}

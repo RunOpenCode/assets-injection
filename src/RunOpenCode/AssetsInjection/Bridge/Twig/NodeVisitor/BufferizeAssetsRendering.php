@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the Asset Injection package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor;
 
 use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\End;
@@ -11,10 +18,23 @@ use Twig_Node_Module;
 use Twig_Environment;
 use Twig_Node;
 
+/**
+ * Class BufferizeAssetsRendering
+ *
+ * Wraps asset injection node with bufferizing tags, delaying their execution.
+ *
+ * @package RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor
+ */
 final class BufferizeAssetsRendering extends BaseNodeVisitor
 {
+    /**
+     * @var string Denotes current scope of AST (block or body).
+     */
     private $currentScope;
 
+    /**
+     * @var array<Twig_Node> List of blocks for current template.
+     */
     private $blocks;
 
     /**
@@ -87,6 +107,12 @@ final class BufferizeAssetsRendering extends BaseNodeVisitor
         return 10;
     }
 
+    /**
+     * Checks if current node is asset injection node, or if such node exists in its sub-tree.
+     *
+     * @param Twig_Node $node RenderNode to check.
+     * @return bool TRUE if this subtree has asset injection node.
+     */
     private function hasAssetsInjection(Twig_Node $node)
     {
         if ($this->isAssetsInjectionNode($node)) {
@@ -103,6 +129,10 @@ final class BufferizeAssetsRendering extends BaseNodeVisitor
                 return true;
             } else {
                 $has = $has || $this->hasAssetsInjection($n);
+
+                if ($has) {
+                    return true;
+                }
             }
         }
 

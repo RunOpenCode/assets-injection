@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the Asset Injection package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render;
 
 use Twig_Node;
@@ -9,7 +16,14 @@ use Twig_Token;
 use Twig_TokenParser;
 use Twig_Error_Syntax;
 
-abstract class AbstractTokenParser extends Twig_TokenParser
+/**
+ * Class AbstractRenderTokenParser
+ *
+ * Parse render asset injection node.
+ *
+ * @package RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render
+ */
+abstract class AbstractRenderTokenParser extends Twig_TokenParser
 {
     /**
      * {@inheritdoc}
@@ -79,5 +93,14 @@ abstract class AbstractTokenParser extends Twig_TokenParser
         return $this->createNode($position, $options, $lineno, $this->getTag());
     }
 
+    /**
+     * Creates asset injection render node.
+     *
+     * @param Twig_Node|null $position
+     * @param Twig_Node|null $options
+     * @param int $lineno
+     * @param null $tag
+     * @return Twig_Node Asset injection render node.
+     */
     protected abstract function createNode(Twig_Node $position = null, Twig_Node $options = null, $lineno = 0, $tag = null);
 }

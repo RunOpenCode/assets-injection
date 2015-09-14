@@ -1,0 +1,15 @@
+# Generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+.thumbs/
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Test generated files to ignore
+
+test/Data/tmp/*
+test/Data/web/output/*

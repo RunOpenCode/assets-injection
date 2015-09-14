@@ -11,7 +11,7 @@ namespace RunOpenCode\AssetsInjection\Compiler;
 
 use Countable;
 use Iterator;
-use RunOpenCode\AssetsInjection\Contract\CompilerPassInterface;
+use RunOpenCode\AssetsInjection\Contract\Compiler\CompilerPassInterface;
 use RunOpenCode\AssetsInjection\Contract\ContainerInterface;
 use RunOpenCode\AssetsInjection\Value\CompilerPassResult;
 

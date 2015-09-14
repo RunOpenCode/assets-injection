@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the Asset Injection package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor;
 
 use Twig_BaseNodeVisitor;
@@ -10,17 +17,38 @@ use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Js\Node as JsNode;
 use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Css\Node as CssNode;
 use Twig_Node_Module;
 
+/**
+ * Class BaseNodeVisitor
+ *
+ * Base node visitor provides common methods for asset injection node visitors.
+ *
+ * @package RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor
+ */
 abstract class BaseNodeVisitor extends Twig_BaseNodeVisitor
 {
+    /**
+     * @var array List of templates that should be processed.
+     */
     protected $whitelist;
 
+    /**
+     * @var string Current template name.
+     */
     protected $filename;
 
+    /**
+     * A constructor.
+     *
+     * @param array $whitelist List of templates that should be processed. Empty array means that all should be processed.
+     */
     public function __construct(array $whitelist = [])
     {
         $this->whitelist = $whitelist;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doEnterNode(Twig_Node $node, Twig_Environment $env)
     {
         if ($node instanceof Twig_Node_Module) {
@@ -30,6 +58,9 @@ abstract class BaseNodeVisitor extends Twig_BaseNodeVisitor
         return $node;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doLeaveNode(Twig_Node $node, Twig_Environment $env)
     {
         if ($node instanceof Twig_Node_Module) {

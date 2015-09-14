@@ -1,8 +1,14 @@
 <?php
-
+/*
+ * This file is part of the Asset Injection package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\AssetsInjection\Bridge\Twig\NodeVisitor;
 
-use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\BufferizedBody;
 use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\Init;
 use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Buff\Output;
 use Twig_Node_Module;
@@ -19,7 +25,9 @@ use Twig_Node;
  */
 final class BufferizeBodyNode extends BaseNodeVisitor
 {
-
+    /**
+     * @var bool Denotes if current template body should be bufferized.
+     */
     private $shouldBufferizeBody = false;
 
     /**
@@ -27,7 +35,7 @@ final class BufferizeBodyNode extends BaseNodeVisitor
      */
     protected function doEnterNode(Twig_Node $node, Twig_Environment $env)
     {
-        parent::doEnterNode($node, $env);
+        $node = parent::doEnterNode($node, $env);
 
         if ($this->shouldProcess()) {
 
@@ -50,7 +58,7 @@ final class BufferizeBodyNode extends BaseNodeVisitor
             if ($node instanceof Twig_Node_Module) {
 
                 if ($this->shouldBufferizeBody) {
-                    $node->setNode('body', new BufferizedBody(array(
+                    $node->setNode('body', new Twig_Node(array(
                         new Init(),
                         $node->getNode('body'),
                         new Output()
@@ -62,7 +70,7 @@ final class BufferizeBodyNode extends BaseNodeVisitor
 
         }
 
-        parent::doLeaveNode($node, $env);
+        $node = parent::doLeaveNode($node, $env);
 
         return $node;
     }

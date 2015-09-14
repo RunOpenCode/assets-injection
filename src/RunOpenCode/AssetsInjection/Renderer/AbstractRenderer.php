@@ -10,14 +10,14 @@ abstract class AbstractRenderer implements ResourceRendererInterface
     {
         $attributes = array_merge(['type' => 'text/javascript'], $attributes);
 
-        return sprintf('<script src="%s"%s></script>', $src, $this->parseHtmlAttributes($attributes));
+        return sprintf('<script src="%s" %s></script>', $src, $this->parseHtmlAttributes($attributes));
     }
 
     protected function getJavascriptCodeHtml($code, array $attributes = [])
     {
         $attributes = array_merge(['type' => 'text/javascript'], $attributes);
 
-        return sprintf('<script%s>%s</script>', $this->parseHtmlAttributes($attributes), $code);
+        return sprintf('<script %s>%s</script>', $this->parseHtmlAttributes($attributes), $code);
     }
 
     protected function getStylesheetIncludeHtml($src, array $attributes = [])
@@ -27,7 +27,7 @@ abstract class AbstractRenderer implements ResourceRendererInterface
             'rel' => 'stylesheet',
         ], $attributes);
 
-        return sprintf('<link href="%s"%s/>', $src, $this->parseHtmlAttributes($attributes));
+        return sprintf('<link href="%s" %s/>', $src, $this->parseHtmlAttributes($attributes));
     }
 
     protected function getStylesheetCodeHtml($code, array $attributes = [])
@@ -36,7 +36,7 @@ abstract class AbstractRenderer implements ResourceRendererInterface
             'type' => 'text/css'
         ], $attributes);
 
-        return sprintf('<style%s>%s</style>', $code, $this->parseHtmlAttributes($attributes));
+        return sprintf('<style %s>%s</style>', $code, $this->parseHtmlAttributes($attributes));
     }
 
     protected function parseHtmlAttributes(array $attributes = [])

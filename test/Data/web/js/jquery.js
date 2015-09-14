@@ -18,7 +18,7 @@
         // For CommonJS and CommonJS-like environments where a proper window is present,
         // execute the factory and get jQuery
         // For environments that do not inherently posses a window with a document
-        // (such as Node.js), expose a jQuery-making factory as module.exports
+        // (such as RenderNode.js), expose a jQuery-making factory as module.exports
         // This accentuates the need for the creation of a real window
         // e.g. var jQuery = require("jquery")(window);
         // See ticket #14549 for more info
@@ -5066,7 +5066,7 @@
 
                 // Lazy-add a submit handler when a descendant form may potentially be submitted
                 jQuery.event.add( this, "click._submit keypress._submit", function( e ) {
-                    // Node name check avoids a VML-related crash in IE (#9807)
+                    // RenderNode name check avoids a VML-related crash in IE (#9807)
                     var elem = e.target,
                         form = jQuery.nodeName( elem, "input" ) || jQuery.nodeName( elem, "button" ) ? elem.form : undefined;
                     if ( form && !jQuery._data( form, "submitBubbles" ) ) {
@@ -6669,7 +6669,7 @@
             "float": support.cssFloat ? "cssFloat" : "styleFloat"
         },
 
-        // Get and set the style property on a DOM Node
+        // Get and set the style property on a DOM RenderNode
         style: function( elem, name, value, extra ) {
             // Don't set styles on text and comment nodes
             if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style ) {

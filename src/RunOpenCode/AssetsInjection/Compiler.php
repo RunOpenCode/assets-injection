@@ -10,8 +10,8 @@
 namespace RunOpenCode\AssetsInjection;
 
 use RunOpenCode\AssetsInjection\Compiler\CompilerPassCollection;
-use RunOpenCode\AssetsInjection\Contract\CompilerInterface;
-use RunOpenCode\AssetsInjection\Contract\CompilerPassInterface;
+use RunOpenCode\AssetsInjection\Contract\Compiler\CompilerInterface;
+use RunOpenCode\AssetsInjection\Contract\Compiler\CompilerPassInterface;
 use RunOpenCode\AssetsInjection\Contract\ContainerInterface;
 
 /**

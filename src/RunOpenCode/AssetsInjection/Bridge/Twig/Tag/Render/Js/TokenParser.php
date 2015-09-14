@@ -2,7 +2,7 @@
 
 namespace RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Js;
 
-use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\AbstractTokenParser;
+use RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\AbstractRenderTokenParser;
 use Twig_Node;
 
 /**
@@ -17,7 +17,7 @@ use Twig_Node;
  *
  * @package RunOpenCode\AssetsInjection\Bridge\Twig\Tag\Render\Js
  */
-class TokenParser extends AbstractTokenParser
+class TokenParser extends AbstractRenderTokenParser
 {
     /**
      * {@inheritdoc}

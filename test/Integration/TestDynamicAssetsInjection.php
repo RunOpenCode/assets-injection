@@ -89,8 +89,8 @@ class TestDynamicAssetsInjection extends \PHPUnit_Framework_TestCase
             'http_root' => 'http://www.mysite.com/'
         ));
 
-        $container->inject('jquery');
+        $container->inject('my-lib');
 
-        echo $renderer->render('js');
+//        echo $renderer->render('js');
     }
 }

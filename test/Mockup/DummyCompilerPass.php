@@ -9,7 +9,7 @@
  */
 namespace RunOpenCode\AssetsInjection\Tests\Mockup;
 
-use RunOpenCode\AssetsInjection\Contract\CompilerPassInterface;
+use RunOpenCode\AssetsInjection\Contract\Compiler\CompilerPassInterface;
 use RunOpenCode\AssetsInjection\Contract\ContainerInterface;
 use RunOpenCode\AssetsInjection\Library\LibraryDefinition;
 use RunOpenCode\AssetsInjection\Value\CompilerPassResult;
