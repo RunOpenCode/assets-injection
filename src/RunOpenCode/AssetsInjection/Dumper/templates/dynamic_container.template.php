@@ -169,7 +169,7 @@ endforeach;
 <?php
                                     break;
                                 default:
-                                    throw new \RunOpenCode\AssetsInjection\Exception\RuntimeException(sprintf('Unknown resource type given for generating container.', $resourceClass));
+                                    throw new \RunOpenCode\AssetsInjection\Exception\RuntimeException(sprintf('Unknown resource type "%s" given for generating container.', $resourceClass));
                                     break;
                             }
 
@@ -210,7 +210,7 @@ foreach ($libraries as $library):
                 $type = \RunOpenCode\AssetsInjection\Utils\AssetType::STYLESHEET;
                 break;
             default:
-                throw new \RunOpenCode\AssetsInjection\Exception\RuntimeException(sprintf('Unknown resource type given for generating container.', $resourceClass));
+                throw new \RunOpenCode\AssetsInjection\Exception\RuntimeException(sprintf('Unknown resource type "%s" given for generating container.', $resourceClass));
                 break;
         }
 
