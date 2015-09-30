@@ -4,7 +4,7 @@
   "keywords": ["assets", "assets management", "injection", "container"],
   "type": "library",
   "license": "MIT",
-  "version": "0.5.0-alpha",
+  "version": "0.5.1-alpha",
   "authors": [
     {
       "name": "Nikola Svitlica a.k.a TheCelavi",
