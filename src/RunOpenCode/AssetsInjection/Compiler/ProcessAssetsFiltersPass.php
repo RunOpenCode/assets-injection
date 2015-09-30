@@ -9,7 +9,6 @@
  */
 namespace RunOpenCode\AssetsInjection\Compiler;
 
-use Assetic\Asset\AssetInterface;
 use Assetic\Asset\FileAsset;
 use Assetic\Asset\HttpAsset;
 use Assetic\Asset\StringAsset;
@@ -137,9 +136,9 @@ final class ProcessAssetsFiltersPass implements CompilerPassInterface
             $asset = new StringAsset($resource->getSource(), $filters, $resource->getSourceRoot());
         } else {
             throw new InvalidArgumentException(sprintf('Instance of "%s" expected, "%s" given.', implode('", "', array(
-                FileResource::class,
-                HttpResource::class,
-                StringResource::class
+                'RunOpenCode\AssetsInjection\Resource\FileResource',
+                'RunOpenCode\AssetsInjection\Resource\HttpResource',
+                'RunOpenCode\AssetsInjection\Resource\StringResource'
             )), get_class($resource)));
         }
 
@@ -198,8 +197,8 @@ final class ProcessAssetsFiltersPass implements CompilerPassInterface
                 $extension = AssetType::STYLESHEET;
             } else {
                 throw new InvalidArgumentException(sprintf('Unable to determine resource type, instance of "%s" expected, "%s" given.', implode('", "', array(
-                    JavascriptStringResource::class,
-                    StylesheetStringResource::class
+                    'RunOpenCode\AssetsInjection\Resource\JavascriptStringResource',
+                    'RunOpenCode\AssetsInjection\Resource\StylesheetStringResource'
                 )), get_class($resource)));
             }
         } else {
