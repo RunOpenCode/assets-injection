@@ -159,11 +159,11 @@ endforeach;
             new FrozenLibraryDefinition('<?php echo $library->getName(); ?>', [
 <?php
                 foreach ($library->getResources() as $resource):
-                            switch ($resourceClass = get_class($resource)) {
-                                case \RunOpenCode\AssetsInjection\Resource\FileResource::class:                     // Fall trough
-                                case \RunOpenCode\AssetsInjection\Resource\HttpResource::class:                     // Fall trough
-                                case \RunOpenCode\AssetsInjection\Resource\JavascriptStringResource::class:         // Fall trough
-                                case \RunOpenCode\AssetsInjection\Resource\StylesheetStringResource::class:         // Fall trough
+                            switch ($resourceClass = ltrim(get_class($resource), '\\')) {
+                                case 'RunOpenCode\AssetsInjection\Resource\FileResource':                     // Fall trough
+                                case 'RunOpenCode\AssetsInjection\Resource\HttpResource':                     // Fall trough
+                                case 'RunOpenCode\AssetsInjection\Resource\JavascriptStringResource':         // Fall trough
+                                case 'RunOpenCode\AssetsInjection\Resource\StylesheetStringResource':         // Fall trough
 ?>
                 new \<?php echo $resourceClass ?>(<?php echo $this->exportVariable($resource->getSource()) ?>, <?php echo $this->exportVariable($resource->getOptions()); ?>, <?php echo $this->exportVariable($resource->getSourceRoot()); ?>, <?php echo $this->exportVariable($resource->getLastModified()); ?>),
 <?php
@@ -198,15 +198,15 @@ foreach ($libraries as $library):
 
         $position = (isset($resource->getOptions()['position'])) ? $resource->getOptions()['position'] : '';
 
-        switch ($resourceClass = get_class($resource)) {
-            case \RunOpenCode\AssetsInjection\Resource\FileResource::class:         // Fall trough
-            case \RunOpenCode\AssetsInjection\Resource\HttpResource::class:
+        switch ($resourceClass = ltrim(get_class($resource), '\\')) {
+            case 'RunOpenCode\AssetsInjection\Resource\FileResource':         // Fall trough
+            case 'RunOpenCode\AssetsInjection\Resource\HttpResource':
                 $type = \RunOpenCode\AssetsInjection\Utils\AssetType::guessAssetType($resource->getSource());
                 break;
-            case \RunOpenCode\AssetsInjection\Resource\JavascriptStringResource::class:
+            case 'RunOpenCode\AssetsInjection\Resource\JavascriptStringResource':
                 $type = \RunOpenCode\AssetsInjection\Utils\AssetType::JAVASCRIPT;
                 break;
-            case \RunOpenCode\AssetsInjection\Resource\StylesheetStringResource::class:
+            case 'RunOpenCode\AssetsInjection\Resource\StylesheetStringResource':
                 $type = \RunOpenCode\AssetsInjection\Utils\AssetType::STYLESHEET;
                 break;
             default:

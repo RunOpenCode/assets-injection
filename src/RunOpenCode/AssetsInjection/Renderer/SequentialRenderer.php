@@ -5,10 +5,6 @@ namespace RunOpenCode\AssetsInjection\Renderer;
 use RunOpenCode\AssetsInjection\Contract\ResourceInterface;
 use RunOpenCode\AssetsInjection\Exception\InvalidArgumentException;
 use RunOpenCode\AssetsInjection\Exception\RuntimeException;
-use RunOpenCode\AssetsInjection\Resource\FileResource;
-use RunOpenCode\AssetsInjection\Resource\HttpResource;
-use RunOpenCode\AssetsInjection\Resource\JavascriptStringResource;
-use RunOpenCode\AssetsInjection\Resource\StylesheetStringResource;
 use RunOpenCode\AssetsInjection\Utils\AssetType;
 use RunOpenCode\AssetsInjection\Value\PathType;
 
@@ -29,14 +25,14 @@ class SequentialRenderer extends AbstractRenderer
                 ((isset($resource->getOptions()['attributes'])) ? $resource->getOptions()['attributes'] : [])
             );
 
-            switch ($resourceClass = get_class($resource)) {
-                case JavascriptStringResource::class:
+            switch ($resourceClass = ltrim(get_class($resource), '\\')) {
+                case 'RunOpenCode\AssetsInjection\Resource\JavascriptStringResource':
                     $result[] = $this->getJavascriptCodeHtml($resource->getSource(), $attributes);
                     break;
-                case StylesheetStringResource::class:
+                case 'RunOpenCode\AssetsInjection\Resource\StylesheetStringResource':
                     $result[] = $this->getStylesheetCodeHtml($resource->getSource(), $attributes);
                     break;
-                case HttpResource::class:
+                case 'RunOpenCode\AssetsInjection\Resource\HttpResource':
                     switch ($type = AssetType::guessAssetType($resource)) {
                         case AssetType::JAVASCRIPT:
                             $result[] = $this->getJavascriptIncludeHtml($resource->getSource(), $attributes);
@@ -49,7 +45,7 @@ class SequentialRenderer extends AbstractRenderer
                             break;
                     }
                     break;
-                case FileResource::class:
+                case 'RunOpenCode\AssetsInjection\Resource\FileResource':
 
                     switch ($options['path_type']) {
                         case PathType::RELATIVE:

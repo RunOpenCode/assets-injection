@@ -185,7 +185,7 @@ class LibraryDefinition implements LibraryDefinitionInterface
     public function offsetSet($offset, $value)
     {
         if (!$value instanceof ResourceInterface) {
-            throw new InvalidArgumentException(sprintf('Instance of "%s" expected, "%s" given.', ResourceInterface::class, (is_object($value) ? get_class($value) : gettype($value))));
+            throw new InvalidArgumentException(sprintf('Instance of "%s" expected, "%s" given.', 'RunOpenCode\AssetsInjection\Contract\ResourceInterface', (is_object($value) ? get_class($value) : gettype($value))));
         }
 
         if (is_null($offset)) {

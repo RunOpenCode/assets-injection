@@ -181,7 +181,7 @@ class LibraryCollection implements LibraryCollectionInterface
     public function offsetSet($offset, $value)
     {
         if (!$value instanceof LibraryDefinitionInterface) {
-            throw new InvalidArgumentException(sprintf('Instance of "%s" expected, "%s" given.', LibraryDefinitionInterface::class, (is_object($value) ? get_class($value) : gettype($value))));
+            throw new InvalidArgumentException(sprintf('Instance of "%s" expected, "%s" given.', 'RunOpenCode\AssetsInjection\Contract\LibraryDefinitionInterface', (is_object($value) ? get_class($value) : gettype($value))));
         }
 
         if (!is_null($offset)) {
